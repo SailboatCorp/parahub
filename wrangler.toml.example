@@ -1,0 +1,16 @@
+# Optional local-development example.
+# In Cloudflare dashboard, add these bindings to your Pages project:
+# D1 binding name: DB
+# R2 binding name: MEDIA
+
+name = "parahub"
+pages_build_output_dir = "dist"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "parahub-db"
+database_id = "PASTE_YOUR_D1_DATABASE_ID_HERE"
+
+[[r2_buckets]]
+binding = "MEDIA"
+bucket_name = "parahub-media"
