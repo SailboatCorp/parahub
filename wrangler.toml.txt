@@ -1,0 +1,8 @@
+name = "parahub"
+pages_build_output_dir = "./dist"
+compatibility_date = "2026-05-22"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "parahub-db"
+database_id = "34f087d5-48d2-4c98-ba73-d861461ed0c1"
