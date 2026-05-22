@@ -37,10 +37,6 @@ export async function onRequestDelete({ request, env, params }) {
   const admin = await requireCaseAdmin(env, params.id, user);
   if (admin.error) return admin.error;
 
-  const mediaRows = (await env.DB.prepare('SELECT media_key FROM events WHERE investigation_id = ? AND media_key IS NOT NULL').bind(params.id).all()).results || [];
-  for (const row of mediaRows) {
-    await env.MEDIA.delete(row.media_key);
-  }
   await env.DB.prepare('DELETE FROM investigations WHERE id = ?').bind(params.id).run();
   return json({ ok: true });
 }

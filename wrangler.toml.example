@@ -1,16 +1,8 @@
-# Optional local-development example.
-# In Cloudflare dashboard, add these bindings to your Pages project:
-# D1 binding name: DB
-# R2 binding name: MEDIA
-
 name = "parahub"
 pages_build_output_dir = "dist"
+compatibility_date = "2026-05-22"
 
-[[d1_databases]]
-binding = "DB"
-database_name = "parahub-db"
-database_id = "PASTE_YOUR_D1_DATABASE_ID_HERE"
-
-[[r2_buckets]]
-binding = "MEDIA"
-bucket_name = "parahub-media"
+# Cloudflare Pages dashboard bindings required:
+# D1 binding name: DB -> parahub-db
+# No R2 binding is required for this D1-only build.
+# Voice/photo media is stored directly in D1 as compressed/base64 data.

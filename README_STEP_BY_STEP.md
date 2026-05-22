@@ -1,35 +1,36 @@
-# ParaHub V1, Cloudflare Pages + D1 + R2
+# ParaHub V1, Cloudflare Pages + D1 only
 
-This is a working V1 web app for ParaHub.
+This is the no-R2 version of ParaHub V1.
 
-It includes:
+It keeps the setup simple:
 
-- Username and password login
-- First-launch admin setup
-- Admin-created local accounts, no email login
-- Investigation creation
-- Room creation and base camp selection
-- Assigned case access
-- Mobile field logger
-- Shared timeline
-- Manual EMF, temperature, sound, motion, and note logs
-- Voice note recording/upload
-- Photo note upload/camera capture
-- Cloudflare D1 database storage
-- Cloudflare R2 media storage
+- Cloudflare Pages hosts the web app
+- Cloudflare Pages Functions run the backend
+- Cloudflare D1 stores accounts, cases, rooms, timeline logs, photo notes, and voice notes
+- No R2 bucket needed
+- No email login
+- Admin creates usernames and passwords inside ParaHub
 
-## Binding names you must use
+## Important limitation
 
-Cloudflare Pages needs these exact bindings:
+Because this version stores media directly in D1, it is designed for small V1 evidence files:
+
+- Photos are compressed in the browser before upload
+- Voice/audio files must be short and under 3 MB
+- This is good enough for testing and small investigations
+- If you later want lots of large audio/video files, move media storage to R2
+
+## Binding name you must use
+
+Cloudflare Pages needs only one binding:
 
 ```text
 DB
-MEDIA
 ```
 
 `DB` must point to your Cloudflare D1 database.
 
-`MEDIA` must point to your Cloudflare R2 bucket.
+There is no `MEDIA` binding in this version.
 
 ## Files that matter
 
@@ -44,181 +45,130 @@ wrangler.toml.example  Optional local development reference
 
 ## Step 1, upload this project to GitHub
 
-On your Chromebook:
+On Windows:
 
 1. Extract the zip.
-2. Go to GitHub.
-3. Create a new repository called `parahub`.
-4. Upload all extracted files into the repo.
-5. Commit the files.
+2. Open GitHub Desktop.
+3. Add the extracted ParaHub folder as a local repository.
+4. Commit the files.
+5. Publish or push the repository to GitHub.
 
-Do not upload the zip itself into the repo. Upload the contents of the extracted folder.
+Do not upload the zip itself into the repo. Upload the extracted folder contents with folders intact.
 
-## Step 2, create your D1 database
+## Step 2, connect GitHub to Cloudflare Pages
 
-In Cloudflare:
+1. Go to Cloudflare.
+2. Click **Workers & Pages**.
+3. Click **Create application**.
+4. Click **Pages**.
+5. Click **Connect to Git**.
+6. Select GitHub.
+7. Choose your `parahub` repository.
+8. Click **Begin setup**.
 
-1. Go to **Workers & Pages**.
-2. Go to **D1**.
-3. Create a database called:
+Use these build settings:
+
+```text
+Framework preset: Vite, or None
+Build command: npm run build
+Build output directory: dist
+```
+
+Click **Save and Deploy**.
+
+It may fail until the D1 binding is added. That is fine.
+
+## Step 3, create your D1 database
+
+1. In Cloudflare, go to **Workers & Pages**.
+2. Click **D1**.
+3. Click **Create database**.
+4. Name it:
 
 ```text
 parahub-db
 ```
 
-4. Open the database.
-5. Go to the SQL console.
-6. Open `schema.sql` from this project.
-7. Copy all of it.
-8. Paste it into the SQL console.
-9. Run it.
+5. Open the database.
+6. Open the SQL console.
+7. Open `schema.sql` from this project.
+8. Copy all of it.
+9. Paste it into the SQL console.
+10. Click **Execute** or **Run**.
 
-## Step 3, create your R2 bucket
-
-In Cloudflare:
-
-1. Go to **R2**.
-2. Create a bucket called:
-
-```text
-parahub-media
-```
-
-Use Standard storage.
-
-This is where photo notes and voice notes are stored.
-
-## Step 4, deploy the React app to Cloudflare Pages
-
-In Cloudflare:
+## Step 4, bind D1 to the Pages project
 
 1. Go to **Workers & Pages**.
-2. Select **Create application**.
-3. Choose **Pages**.
-4. Choose **Import from GitHub**.
-5. Pick your `parahub` repository.
-6. Use these build settings:
-
-```text
-Framework preset: None or Vite
-Build command: npm run build
-Build output directory: dist
-```
-
-7. Deploy it.
-
-The first deployment may fail until the bindings are added. That is normal.
-
-## Step 5, add Cloudflare bindings
-
-Open your Pages project.
-
-Go to:
-
-```text
-Settings → Bindings
-```
-
-Add a D1 database binding:
+2. Open your **parahub** Pages project.
+3. Click **Settings**.
+4. Click **Functions**.
+5. Find **Bindings**.
+6. Click **Add binding**.
+7. Choose **D1 database**.
+8. Set:
 
 ```text
 Variable name: DB
 Database: parahub-db
 ```
 
-Add an R2 bucket binding:
+9. Save.
+
+Do not add R2. This version does not need it.
+
+## Step 5, redeploy
+
+1. Go to your Pages project.
+2. Click **Deployments**.
+3. Click the latest deployment.
+4. Click **Retry deployment**.
+
+Wait until it says **Success**.
+
+Then open the temporary Cloudflare link, usually something like:
 
 ```text
-Variable name: MEDIA
-Bucket: parahub-media
+https://parahub.pages.dev
 ```
 
-Save.
+You should see the ParaHub setup screen.
 
-Then redeploy the Pages project.
+## Step 6, create your admin account
 
-## Step 6, add your subdomain
+On first launch:
 
-Open your Pages project.
+1. Create your admin username.
+2. Create your display name.
+3. Create your password.
+4. Log in.
 
-Go to:
+Then you can create investigator/viewer accounts inside ParaHub.
 
-```text
-Custom domains → Set up a domain
-```
+## Step 7, add your custom domain
 
-Use:
+Only do this after the Pages link works.
+
+1. Open your **parahub** Pages project.
+2. Click **Custom domains**.
+3. Click **Set up a custom domain**.
+4. Enter:
 
 ```text
 parahub.kaidenuk.org
 ```
 
-Cloudflare should create the DNS record automatically because your domain is already managed by Cloudflare.
+5. Click **Continue**.
+6. Click **Activate domain**.
 
-## Step 7, first launch
+## First live test
 
-Open your deployed app.
-
-You should see:
-
-```text
-Create your ParaHub admin account
-```
-
-Create your admin username and password.
-
-Then log in.
-
-## Step 8, create investigator accounts
-
-Inside ParaHub:
-
-1. Click **Team accounts**.
-2. Create an account for each investigator.
-3. Give each person their username and password.
-
-No email is required.
-
-## Step 9, create an investigation
-
-1. Click **New investigation**.
-2. Add case name, location, date, and lead investigator.
-3. Add rooms.
-4. Mark base camp.
-5. Assign investigators.
-6. Create the case.
-
-## Step 10, use it live
-
-Admin account:
-
-- Opens the admin hub.
-- Watches incoming timeline logs.
-- Uses control checks.
-- Can add notes too.
-
-Investigator account:
-
-- Logs in on phone.
-- Opens assigned case.
-- Selects current room.
-- Logs readings.
-- Records voice notes.
-- Uploads or takes photo notes.
-
-Viewer account:
-
-- Can view assigned timelines.
-- Cannot edit or add events.
-
-## Important V1 limitations
-
-- This version uses polling every few seconds, not true live websockets.
-- Event deletion is intentionally disabled in the frontend to preserve evidence history.
-- Video upload is not included yet.
-- Hardware camera panels and USB sensor bridges are not included yet.
-- File uploads are limited to 25 MB each.
-
-## Best practice during investigations
-
-Use short audio clips. Avoid uploading huge files. For V1, voice notes and photos are intended as quick evidence markers, not full video archival storage.
+1. Log in as admin.
+2. Create one investigator account.
+3. Create one investigation.
+4. Add rooms.
+5. Assign the investigator.
+6. Log out.
+7. Log in as the investigator.
+8. Open the case.
+9. Add a note, a reading, a short voice note, and a photo note.
+10. Log back in as admin and check the timeline.

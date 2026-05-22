@@ -27,6 +27,33 @@ async function api(path, options = {}) {
   return data;
 }
 
+
+async function compressImageFile(file, maxSide = 1280, quality = 0.72) {
+  if (!file || !file.type?.startsWith('image/')) return file;
+  const imageUrl = URL.createObjectURL(file);
+  try {
+    const img = await new Promise((resolve, reject) => {
+      const image = new Image();
+      image.onload = () => resolve(image);
+      image.onerror = reject;
+      image.src = imageUrl;
+    });
+    const scale = Math.min(1, maxSide / Math.max(img.width, img.height));
+    const width = Math.max(1, Math.round(img.width * scale));
+    const height = Math.max(1, Math.round(img.height * scale));
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0, width, height);
+    const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/jpeg', quality));
+    if (!blob) return file;
+    return new File([blob], file.name.replace(/\.[^.]+$/, '') + '.jpg', { type: 'image/jpeg' });
+  } finally {
+    URL.revokeObjectURL(imageUrl);
+  }
+}
+
 function Pill({ children, tone = 'default' }) { return <span className={`pill ${tone}`}>{children}</span>; }
 function Card({ children, className = '' }) { return <section className={`card ${className}`}>{children}</section>; }
 function Button({ children, onClick, variant = 'default', type = 'button', disabled = false }) { return <button type={type} disabled={disabled} onClick={onClick} className={`btn ${variant}`}>{children}</button>; }
@@ -203,6 +230,17 @@ function LogModal({ caseId, room, user, eventType, onClose, onSaved }) {
     } catch (err) { setError('Microphone permission failed or is not supported on this device.'); }
   }
   function stopRecording() { if (recorderRef.current && recording) { recorderRef.current.stop(); setRecording(false); } }
+  async function chooseFile(nextFile) {
+    setError('');
+    if (!nextFile) { setFile(null); return; }
+    try {
+      const prepared = eventType === 'Photo' ? await compressImageFile(nextFile) : nextFile;
+      setFile(prepared);
+      if (prepared.size > 3 * 1024 * 1024) setError('That file is still larger than 3 MB. Try a shorter recording or smaller photo.');
+    } catch {
+      setError('Could not prepare that file. Try a different file.');
+    }
+  }
   async function save(e) {
     e.preventDefault();
     setError('');
@@ -219,7 +257,7 @@ function LogModal({ caseId, room, user, eventType, onClose, onSaved }) {
       onSaved();
     } catch (err) { setError(err.message); }
   }
-  return <div className="modal-backdrop"><Card className="modal"><div className="modal-head"><div><p className="eyebrow">Quick log</p><h2>{meta.icon} {meta.label} in {room.name}</h2><p>Logged by {user.display_name}. Timestamp saves automatically.</p></div><Button onClick={onClose}>✕</Button></div><form onSubmit={save} className="stack">{meta.readingKey && <div className="form-grid two"><Field label="Reading value" value={value} setValue={setValue} placeholder="Example: 3.2" /><Field label="Unit" value={unit} setValue={setUnit} /></div>}{eventType === 'Voice' && <div className="upload-box"><h3>Voice note</h3><p>Record directly on the phone or upload an audio file.</p><div className="actions">{!recording ? <Button onClick={startRecording}>Start recording</Button> : <Button onClick={stopRecording} variant="danger">Stop recording</Button>}<input type="file" accept="audio/*" onChange={(e) => setFile(e.target.files?.[0] || null)} /></div>{file && <p className="success">Selected: {file.name}</p>}</div>}{eventType === 'Photo' && <div className="upload-box"><h3>Photo note</h3><p>Take a photo or upload one from the gallery.</p><input type="file" accept="image/*" capture="environment" onChange={(e) => setFile(e.target.files?.[0] || null)} />{file && <p className="success">Selected: {file.name}</p>}</div>}<label className="field"><span>Note</span><textarea value={note} onChange={(e) => setNote(e.target.value)} placeholder="What happened? What was checked? Any obvious normal cause?" /></label><Select label="Initial classification" value={classification} setValue={setClassification}><option>Unreviewed</option><option>Known cause</option><option>Likely normal cause</option><option>Unclear</option><option>High-interest anomaly</option></Select>{error && <div className="error">{error}</div>}<div className="actions end"><Button onClick={onClose}>Cancel</Button><Button type="submit" variant="primary">Save to timeline</Button></div></form></Card></div>;
+  return <div className="modal-backdrop"><Card className="modal"><div className="modal-head"><div><p className="eyebrow">Quick log</p><h2>{meta.icon} {meta.label} in {room.name}</h2><p>Logged by {user.display_name}. Timestamp saves automatically.</p></div><Button onClick={onClose}>✕</Button></div><form onSubmit={save} className="stack">{meta.readingKey && <div className="form-grid two"><Field label="Reading value" value={value} setValue={setValue} placeholder="Example: 3.2" /><Field label="Unit" value={unit} setValue={setUnit} /></div>}{eventType === 'Voice' && <div className="upload-box"><h3>Voice note</h3><p>Record directly on the phone or upload an audio file.</p><div className="actions">{!recording ? <Button onClick={startRecording}>Start recording</Button> : <Button onClick={stopRecording} variant="danger">Stop recording</Button>}<input type="file" accept="audio/*" onChange={(e) => chooseFile(e.target.files?.[0] || null)} /></div>{file && <p className="success">Selected: {file.name}</p>}</div>}{eventType === 'Photo' && <div className="upload-box"><h3>Photo note</h3><p>Take a photo or upload one from the gallery.</p><input type="file" accept="image/*" capture="environment" onChange={(e) => chooseFile(e.target.files?.[0] || null)} />{file && <p className="success">Selected: {file.name}</p>}</div>}<label className="field"><span>Note</span><textarea value={note} onChange={(e) => setNote(e.target.value)} placeholder="What happened? What was checked? Any obvious normal cause?" /></label><Select label="Initial classification" value={classification} setValue={setClassification}><option>Unreviewed</option><option>Known cause</option><option>Likely normal cause</option><option>Unclear</option><option>High-interest anomaly</option></Select>{error && <div className="error">{error}</div>}<div className="actions end"><Button onClick={onClose}>Cancel</Button><Button type="submit" variant="primary">Save to timeline</Button></div></form></Card></div>;
 }
 
 function LiveCase({ user, caseId, onBack }) {

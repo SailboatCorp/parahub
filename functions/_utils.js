@@ -12,7 +12,6 @@ export function json(data, status = 200) {
 
 export function requireBindings(env) {
   if (!env.DB) throw new Error('Missing D1 binding named DB');
-  if (!env.MEDIA) throw new Error('Missing R2 binding named MEDIA');
 }
 
 export function id(prefix = 'id') {

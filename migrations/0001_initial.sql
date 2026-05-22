@@ -64,6 +64,7 @@ CREATE TABLE IF NOT EXISTS events (
   media_name TEXT,
   media_type TEXT,
   media_size INTEGER,
+  media_data TEXT,
   created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (investigation_id) REFERENCES investigations(id) ON DELETE CASCADE,
   FOREIGN KEY (room_id) REFERENCES rooms(id),
