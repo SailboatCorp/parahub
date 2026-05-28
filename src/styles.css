@@ -109,3 +109,26 @@ hr { border: 0; border-top: 1px solid #1e293b; margin: 1.5rem 0; }
   .quick-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   h1 { font-size: 2.1rem; }
 }
+
+.terms-shell { align-items: start; padding-top: 2rem; padding-bottom: 2rem; }
+.terms-card { width: min(980px, 100%); }
+.terms-tabs { display: flex; flex-wrap: wrap; gap: .65rem; margin: 1.2rem 0; }
+.terms-panel { border: 1px solid #1e293b; background: rgba(2,6,23,.58); border-radius: 1.5rem; padding: 1rem; margin: 1rem 0; }
+.scroll-panel { max-height: 46vh; overflow: auto; }
+.terms-list { color: #cbd5e1; line-height: 1.65; padding-left: 1.3rem; display: grid; gap: .55rem; }
+.terms-document h3 { color: #f8fafc; margin-bottom: .75rem; }
+.terms-document p { margin-bottom: 1rem; }
+.check-row { display: flex; align-items: flex-start; gap: .75rem; border: 1px solid rgba(34,211,238,.26); background: rgba(34,211,238,.08); border-radius: 1.25rem; padding: 1rem; color: #e5e7eb; line-height: 1.5; }
+.check-row input { width: 1.15rem; min-width: 1.15rem; height: 1.15rem; margin-top: .15rem; }
+.upload-warning { border: 1px solid rgba(251,191,36,.32); background: rgba(251,191,36,.08); border-radius: 1.25rem; padding: 1rem; color: #fde68a; }
+.upload-warning p { color: #fde68a; margin-bottom: .55rem; }
+.upload-warning p:last-child { margin-bottom: 0; }
+.upload-confirm { margin-top: -.25rem; }
+
+.video-modal { width: min(980px, 100%); }
+.video-frame { position: relative; width: 100%; aspect-ratio: 16 / 9; border: 1px solid #1e293b; background: #020617; border-radius: 1.5rem; overflow: hidden; margin: 1rem 0; }
+.video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.tutorial-note { border: 1px solid rgba(34,211,238,.26); background: rgba(34,211,238,.08); border-radius: 1.25rem; padding: 1rem; margin-bottom: 1rem; }
+.tutorial-note p { margin: .35rem 0 0; }
+
+.help-text { margin-top: -0.35rem; color: #94a3b8; font-size: 0.88rem; line-height: 1.55; }

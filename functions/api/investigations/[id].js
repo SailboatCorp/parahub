@@ -1,8 +1,10 @@
-import { json, requireUser, requireInvestigationAccess, requireCaseAdmin } from '../../_utils.js';
+import { json, requireUser, requireInvestigationAccess, requireCaseAdmin, requireAcceptedTerms } from '../../_utils.js';
 
 export async function onRequestGet({ request, env, params }) {
   const { user, error } = await requireUser(request, env);
   if (error) return error;
+  const termsError = requireAcceptedTerms(user);
+  if (termsError) return termsError;
   const investigationId = params.id;
   const access = await requireInvestigationAccess(env, investigationId, user);
   if (access.error) return access.error;
@@ -34,6 +36,8 @@ export async function onRequestGet({ request, env, params }) {
 export async function onRequestDelete({ request, env, params }) {
   const { user, error } = await requireUser(request, env);
   if (error) return error;
+  const termsError = requireAcceptedTerms(user);
+  if (termsError) return termsError;
   const admin = await requireCaseAdmin(env, params.id, user);
   if (admin.error) return admin.error;
 

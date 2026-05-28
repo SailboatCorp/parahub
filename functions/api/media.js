@@ -1,8 +1,10 @@
-import { json, requireUser, requireInvestigationAccess } from '../_utils.js';
+import { json, requireUser, requireInvestigationAccess, requireAcceptedTerms } from '../_utils.js';
 
 export async function onRequestGet({ request, env }) {
   const { user, error } = await requireUser(request, env);
   if (error) return error;
+  const termsError = requireAcceptedTerms(user);
+  if (termsError) return termsError;
   const url = new URL(request.url);
   const key = url.searchParams.get('key');
   if (!key) return json({ error: 'Missing media key' }, 400);

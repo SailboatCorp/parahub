@@ -13,6 +13,115 @@ const eventTypes = [
   { type: 'Note', label: 'Note', icon: '📝' },
 ];
 
+
+
+const CURRENT_TERMS_VERSION = '1.0';
+const CURRENT_PRIVACY_VERSION = '1.0';
+const TUTORIAL_VIDEO_URL = 'https://www.youtube.com/watch?v=kgVRi-xDDu4';
+const TUTORIAL_EMBED_URL = 'https://www.youtube.com/embed/kgVRi-xDDu4?autoplay=1&playsinline=1&rel=0&modestbranding=1';
+
+const creditPreferenceOptions = [
+  'Anonymous investigator',
+  'First name only',
+  'Full name',
+  'Custom credit name',
+  'Do not publicly credit me',
+];
+
+const termsSummary = [
+  'ParaHub is operated by Kaiden Jones for paranormal investigation, research, evidence logging, reports, archives, and related project use.',
+  'Participation is voluntary and unpaid.',
+  'Case materials, notes, uploads, readings, reports, and evidence submitted through ParaHub may be used by Kaiden Jones for research, analysis, publication, presentation, archiving, and future related work.',
+  'You will only upload material you created yourself or have permission to use.',
+  'You will not upload people’s faces, children, private documents, addresses, or unnecessary personal information as evidence.',
+  'Evidence uploads should focus on surroundings, rooms, objects, equipment, environmental details, and case-relevant observations.',
+  'You will not fake, stage, alter, delete, mislabel, or misrepresent evidence.',
+  'You understand that public outputs may anonymise you by default unless named credit is agreed separately later.',
+  'You agree to keep private case materials confidential.',
+];
+
+const fullTermsText = `ParaHub is operated by Kaiden Jones for paranormal investigation, case management, evidence logging, research, reporting, archiving, and related project use.
+
+Participation in ParaHub investigations is voluntary and unpaid. Users are not employees, workers, contractors, partners, co-owners, or paid researchers unless a separate written agreement says otherwise.
+
+User roles may include admin, investigator, viewer, guest, or other roles added in the future. Users must only access the cases, tools, evidence, and records they are authorised to access.
+
+The ParaHub case structure, final case record, research framing, reports, exports, summaries, software design, and public outputs are controlled by Kaiden Jones.
+
+Users may retain any copyright they personally own in material they create, unless a separate written agreement says otherwise. By uploading, submitting, recording, writing, or contributing material to ParaHub, users grant Kaiden Jones a permanent, worldwide, royalty-free, non-exclusive licence to use, copy, store, edit, analyse, publish, display, adapt, archive, distribute, and include that material in ParaHub, investigation reports, research outputs, publications, presentations, websites, videos, educational materials, software development, and future related projects.
+
+Users must not upload photographs, videos, screenshots, or recordings that clearly show a person’s face, body, identity, private information, or personal belongings unless there is a clear reason and permission has been obtained.
+
+ParaHub evidence uploads should focus on the investigation environment, not on identifying people. Acceptable evidence may include rooms, hallways, doors, windows, objects, equipment, environmental conditions, marks, movement, damage, shadows, reflections, or visual anomalies.
+
+Users should avoid uploading close-up images of faces, photos of witnesses, residents, staff, neighbours, members of the public, images of children, private documents, addresses, letters, bank cards, medical information, personal belongings, screenshots, messages, or anything that identifies private individuals.
+
+If a person accidentally appears in an image or video, the user should avoid uploading it where possible. If the material is important to the case, the user should blur, crop, obscure, or otherwise remove identifying features before upload where practical.
+
+Kaiden Jones may remove, reject, anonymise, blur, crop, or restrict uploaded material that contains unnecessary personal information or identifiable people.
+
+Users must not fake, stage, alter, delete, mislabel, exaggerate, or misrepresent evidence. If evidence has been edited, cleaned, cropped, enhanced, or processed, that should be clearly marked where relevant.
+
+ParaHub may log who uploaded evidence, when it was uploaded, which case it belongs to, which room or area it relates to, and whether it was reviewed, rejected, edited, exported, archived, or published.
+
+Device readings, environmental readings, audio anomalies, video anomalies, photographs, notes, and field observations are logged for review and research. They do not automatically prove paranormal activity, scientific causation, danger, or any final conclusion.
+
+ParaHub must not be used to make medical, legal, spiritual, mental health, safety, or emergency claims. It must not be used to tell people they are haunted, possessed, cursed, mentally ill, unsafe, or in danger. ParaHub does not replace doctors, police, landlords, electricians, emergency services, legal advice, or professional safety checks.
+
+Users must not use ParaHub for trespassing, breaking into buildings, entering restricted areas, filming on private land without permission, publishing private addresses without approval, or disturbing residents, staff, neighbours, animals, or members of the public.
+
+Users are responsible for acting safely during investigations. Users must avoid unsafe access, climbing, blocked exits, damaged structures, exposed electrics, dangerous buildings, restricted areas, and any behaviour that creates unnecessary risk.
+
+Users must protect third parties. Users should avoid collecting unnecessary information about residents, witnesses, neighbours, staff, property owners, children, vulnerable people, or members of the public.
+
+Users must keep their account secure. They must not share logins, leak access links, access cases they were not invited to, misuse another person’s account, or allow unauthorised people to view private case material.
+
+Raw evidence, witness details, private locations, screenshots, exports, internal notes, unpublished reports, and private case data must not be shared publicly without permission from Kaiden Jones.
+
+Viewer-only users may view authorised material only. They must not copy, publish, leak, redistribute, download, or claim ParaHub case materials unless permission has been given.
+
+Kaiden Jones has final control over reports, videos, screenshots, case studies, publications, research summaries, conclusions, public wording, and editorial decisions relating to ParaHub case materials.
+
+ParaHub is provided as-is. Kaiden Jones will try to keep the software useful and reliable, but does not guarantee perfect access, uninterrupted service, permanent storage, no bugs, or recovery of lost or deleted data.
+
+ParaHub may create backups, exports, archives, and copies of case data for preservation, security, research, reporting, and evidence integrity.
+
+Users must not upload illegal content, stolen content, private messages without permission, sexual content, images of children, bank details, passwords, medical records, fabricated evidence, copyrighted material they do not have permission to use, or any material that unnecessarily exposes private people.
+
+Kaiden Jones may update these terms. If the terms or privacy notice are updated, users may be asked to accept the new version before continuing to use ParaHub.
+
+These terms are governed by the laws of England and Wales.`;
+
+const privacyNoticeText = `ParaHub may collect and store information connected to user accounts, investigations, cases, evidence uploads, notes, readings, reports, timestamps, uploaded files, and user activity inside the app.
+
+This may include usernames, display names, email addresses if used by the app, user roles, case access permissions, evidence uploads, written notes, environmental readings, audio files, video files, photographs, timestamps, room names, case names, comments, reports, and acceptance records for terms and privacy notices.
+
+ParaHub uses this information for case management, paranormal investigation, research, evidence review, reporting, archiving, safety, software operation, account access, and project administration.
+
+Users should not upload unnecessary personal information. Users should not upload people’s faces, children, private documents, addresses, bank details, medical information, private messages, or other identifiable personal information unless there is a clear case-relevant reason and permission has been obtained.
+
+Where possible, public outputs may anonymise investigators, witnesses, third parties, and private individuals.
+
+By default, investigators may be referred to as “Investigator”, “Investigator A”, or “the investigation team” in public outputs unless named credit is agreed separately later.
+
+Case records may be kept long-term for research integrity, comparison, archive use, evidence review, reporting, and project history.
+
+Users may stop participating in an investigation, but materials already submitted may continue to be stored and used where needed for research integrity, case continuity, safety, lawful use, archive purposes, or accurate reporting.
+
+Users may ask Kaiden Jones about their data, request correction of inaccurate information, or ask whether identifying details can be removed from future public outputs. Some case materials may need to be retained where they form part of an investigation record.
+
+Private case materials should only be accessed by authorised users.
+
+Kaiden Jones may remove, restrict, anonymise, blur, crop, or delete material where appropriate.`;
+
+function userHasAcceptedCurrentTerms(user) {
+  return Boolean(
+    user?.acceptedTerms &&
+    user?.acceptedTermsVersion === CURRENT_TERMS_VERSION &&
+    user?.acceptedPrivacyVersion === CURRENT_PRIVACY_VERSION
+  );
+}
+
 function token() { return localStorage.getItem('parahub_token') || ''; }
 function setToken(value) { value ? localStorage.setItem('parahub_token', value) : localStorage.removeItem('parahub_token'); }
 
@@ -75,7 +184,7 @@ function Setup({ onDone }) {
       onDone();
     } catch (err) { setError(err.message); }
   }
-  return <main className="shell center"><Card className="login-card"><div className="logo">🌙</div><h1>Create your ParaHub admin account</h1><p>This is the first launch setup. No email required. Create the main admin login you will use to create cases and team accounts.</p><form onSubmit={submit} className="stack"><Field label="Username" value={username} setValue={setUsername} /><Field label="Display name" value={displayName} setValue={setDisplayName} /><Field label="Password, minimum 8 characters" value={password} setValue={setPassword} type="password" />{error && <div className="error">{error}</div>}<Button type="submit" variant="primary">Create admin account</Button></form></Card></main>;
+  return <main className="shell center"><Card className="login-card"><div className="logo">🌙</div><h1>Create your ParaHub admin account</h1><p>This is the first launch setup. No email required. Create the main admin login you will use to create cases and user accounts for investigators.</p><form onSubmit={submit} className="stack"><Field label="Username" value={username} setValue={setUsername} /><Field label="Display name" value={displayName} setValue={setDisplayName} /><Field label="Password, minimum 8 characters" value={password} setValue={setPassword} type="password" />{error && <div className="error">{error}</div>}<Button type="submit" variant="primary">Create admin account</Button></form></Card></main>;
 }
 
 function Login({ onLogin }) {
@@ -95,17 +204,38 @@ function Login({ onLogin }) {
 }
 
 function Tutorial({ onClose }) {
-  const [left, setLeft] = useState(20);
-  useEffect(() => {
-    const close = setTimeout(onClose, 20000);
-    const tick = setInterval(() => setLeft((x) => Math.max(0, x - 1)), 1000);
-    return () => { clearTimeout(close); clearInterval(tick); };
-  }, [onClose]);
-  return <div className="modal-backdrop"><Card className="modal"><div className="modal-head"><div><p className="eyebrow">Tutorial</p><h2>How ParaHub works</h2><p>Admin creates the case and accounts. Investigators log in on phones and submit readings, photo notes, and voice notes. This closes in {left} seconds.</p></div><Button onClick={onClose}>✕</Button></div><div className="tutorial-grid">{[['1','Create accounts','Admin creates usernames and passwords.'],['2','Create case','Add rooms, base camp, and assigned investigators.'],['3','Field logging','Phones use big quick buttons for notes and readings.'],['4','Voice and photo','Record audio or upload/take a photo.'],['5','Hub review','Admin sees the shared timeline and control checks.'],['6','Privacy','Users only see cases they are assigned to.']].map(([n,t,d]) => <div key={n} className="tutorial-item"><b>{n}</b><strong>{t}</strong><span>{d}</span></div>)}</div><Button onClick={onClose} variant="primary">Close guide now</Button></Card></div>;
+  return <div className="modal-backdrop"><Card className="modal video-modal"><div className="modal-head"><div><p className="eyebrow">Investigator tutorial</p><h2>How to use ParaHub</h2><p>This tutorial was created for ParaHub investigators. Watch it once after accepting the terms, then reopen it any time from the Tutorial button.</p></div><Button onClick={onClose}>✕</Button></div><div className="video-frame"><iframe title="ParaHub investigator tutorial" src={TUTORIAL_EMBED_URL} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen referrerPolicy="strict-origin-when-cross-origin"></iframe></div><div className="tutorial-note"><strong>Quick reminder</strong><p>Select the correct room before logging evidence. Keep notes short. Mention normal causes. Do not upload faces, children, private documents, addresses, or unnecessary personal information.</p></div><div className="actions end"><a className="btn" href={TUTORIAL_VIDEO_URL} target="_blank" rel="noreferrer">Open on YouTube</a><Button onClick={onClose} variant="primary">Continue to ParaHub</Button></div></Card></div>;
+}
+
+
+function TermsTextBlock({ title, text }) {
+  return <div className="terms-document"><h3>{title}</h3>{text.split('\n\n').map((paragraph, index) => <p key={index}>{paragraph}</p>)}</div>;
+}
+
+function TermsAcceptance({ user, onAccepted }) {
+  const [checked, setChecked] = useState(false);
+  const [view, setView] = useState('summary');
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState('');
+
+  async function accept() {
+    if (!checked || saving) return;
+    setSaving(true);
+    setError('');
+    try {
+      const data = await api('/terms', { method: 'POST', body: JSON.stringify({ accepted: true }) });
+      onAccepted(data.user);
+    } catch (err) {
+      setError(err.message);
+      setSaving(false);
+    }
+  }
+
+  return <main className="shell center terms-shell"><Card className="terms-card"><div className="logo">🌙</div><p className="eyebrow">First login agreement</p><h1>Welcome to ParaHub</h1><p>Before using ParaHub, you must accept the ParaHub Terms of Use, Research Participation Agreement, Upload Rules, and Privacy Notice.</p><div className="chips"><Pill tone="blue">Terms v{CURRENT_TERMS_VERSION}</Pill><Pill tone="blue">Privacy v{CURRENT_PRIVACY_VERSION}</Pill><Pill>{user.display_name}</Pill></div><div className="terms-tabs"><Button variant={view === 'summary' ? 'primary' : 'default'} onClick={() => setView('summary')}>Summary</Button><Button variant={view === 'terms' ? 'primary' : 'default'} onClick={() => setView('terms')}>View full terms</Button><Button variant={view === 'privacy' ? 'primary' : 'default'} onClick={() => setView('privacy')}>View privacy notice</Button></div>{view === 'summary' && <div className="terms-panel"><h2>What you are agreeing to</h2><ul className="terms-list">{termsSummary.map((item) => <li key={item}>{item}</li>)}</ul></div>}{view === 'terms' && <div className="terms-panel scroll-panel"><TermsTextBlock title="ParaHub Terms of Use and Research Participation Agreement" text={fullTermsText} /></div>}{view === 'privacy' && <div className="terms-panel scroll-panel"><TermsTextBlock title="ParaHub Privacy Notice" text={privacyNoticeText} /></div>}<label className="check-row"><input type="checkbox" checked={checked} onChange={(e) => setChecked(e.target.checked)} /><span>I have read and agree to the ParaHub Terms of Use, Research Participation Agreement, Upload Rules, and Privacy Notice.</span></label>{error && <div className="error">{error}</div>}<div className="actions end"><Button variant="primary" disabled={!checked || saving} onClick={accept}>{saving ? 'Saving acceptance…' : 'Accept and Continue'}</Button></div></Card></main>;
 }
 
 function AccountManager({ users, refreshUsers, onClose }) {
-  const [form, setForm] = useState({ username: '', display_name: '', password: '', role: 'investigator' });
+  const [form, setForm] = useState({ username: '', display_name: '', password: '', role: 'investigator', credit_preference: 'Anonymous investigator', custom_credit_name: '' });
   const [error, setError] = useState('');
   const set = (k, v) => setForm((f) => ({ ...f, [k]: v }));
   async function create(e) {
@@ -113,11 +243,11 @@ function AccountManager({ users, refreshUsers, onClose }) {
     setError('');
     try {
       await api('/users', { method: 'POST', body: JSON.stringify(form) });
-      setForm({ username: '', display_name: '', password: '', role: 'investigator' });
+      setForm({ username: '', display_name: '', password: '', role: 'investigator', credit_preference: 'Anonymous investigator', custom_credit_name: '' });
       await refreshUsers();
     } catch (err) { setError(err.message); }
   }
-  return <div className="modal-backdrop"><Card className="modal wide"><div className="modal-head"><div><p className="eyebrow">Admin</p><h2>Team accounts</h2><p>Create local ParaHub accounts. No email required. Give each person their username and password.</p></div><Button onClick={onClose}>✕</Button></div><div className="split"><form onSubmit={create} className="stack"><Field label="Username" value={form.username} setValue={(v) => set('username', v)} /><Field label="Display name" value={form.display_name} setValue={(v) => set('display_name', v)} /><Field label="Password" value={form.password} setValue={(v) => set('password', v)} type="password" /><Select label="Role" value={form.role} setValue={(v) => set('role', v)}><option value="investigator">Investigator</option><option value="viewer">Viewer</option><option value="admin">Admin</option></Select>{error && <div className="error">{error}</div>}<Button type="submit" variant="primary">Create account</Button></form><div className="list">{users.map((u) => <div key={u.id} className="list-row"><div><strong>{u.display_name}</strong><span>@{u.username}</span></div><Pill tone={u.role === 'admin' ? 'blue' : u.role === 'viewer' ? 'purple' : 'default'}>{u.role}</Pill></div>)}</div></div></Card></div>;
+  return <div className="modal-backdrop"><Card className="modal wide"><div className="modal-head"><div><p className="eyebrow">Admin</p><h2>User accounts</h2><p>Create local ParaHub login accounts for investigators and viewers. No email required. Give each person their username and password.</p></div><Button onClick={onClose}>✕</Button></div><div className="split"><form onSubmit={create} className="stack"><Field label="Username" value={form.username} setValue={(v) => set('username', v)} /><Field label="Display name" value={form.display_name} setValue={(v) => set('display_name', v)} /><Field label="Password" value={form.password} setValue={(v) => set('password', v)} type="password" /><Select label="Role" value={form.role} setValue={(v) => set('role', v)}><option value="investigator">Investigator</option><option value="viewer">Viewer</option><option value="admin">Admin</option></Select><Select label="Public credit preference, for future reports/publications only" value={form.credit_preference} setValue={(v) => set('credit_preference', v)}>{creditPreferenceOptions.map((option) => <option key={option} value={option}>{option}</option>)}</Select><p className="help-text">This does not change the name shown inside ParaHub. It only records how this person should be credited later if case material is used in reports, research, videos, presentations, archives, or public outputs. Default is anonymous.</p>{form.credit_preference === 'Custom credit name' && <Field label="Custom credit name" value={form.custom_credit_name} setValue={(v) => set('custom_credit_name', v)} />}{error && <div className="error">{error}</div>}<Button type="submit" variant="primary">Create account</Button></form><div className="list">{users.map((u) => <div key={u.id} className="list-row"><div><strong>{u.display_name}</strong><span>@{u.username}</span><small>Public credit: {u.credit_preference || u.creditPreference || 'Anonymous investigator'}</small></div><Pill tone={u.role === 'admin' ? 'blue' : u.role === 'viewer' ? 'purple' : 'default'}>{u.role}</Pill></div>)}</div></div></Card></div>;
 }
 
 function Dashboard({ user, setUser, users, refreshUsers, cases, refreshCases, openCase, newCase }) {
@@ -133,7 +263,7 @@ function Dashboard({ user, setUser, users, refreshUsers, cases, refreshCases, op
     setError('');
     try { await api(`/investigations/${id}`, { method: 'DELETE' }); await refreshCases(); } catch (err) { setError(err.message); }
   }
-  return <main className="shell"><header className="topbar"><div><p className="eyebrow">Logged in as {user.display_name}</p><h1>Investigation Dashboard</h1><div className="chips"><Pill tone={user.role === 'admin' ? 'blue' : 'default'}>{user.role}</Pill><Pill>{cases.length} assigned</Pill></div></div><div className="actions">{user.role === 'admin' && <Button onClick={() => setAccountsOpen(true)}>Team accounts</Button>}{user.role === 'admin' && <Button onClick={newCase} variant="primary">New investigation</Button>}<Button onClick={logout} variant="danger">Log out</Button></div></header>{error && <div className="error">{error}</div>}<div className="main-grid"><Card><div className="section-head"><div><h2>Assigned investigations</h2><p>Users only see cases they are assigned to.</p></div></div>{cases.length === 0 ? <div className="empty">No investigations yet.</div> : <div className="case-list">{cases.map((c) => <div key={c.id} className="case-row"><button onClick={() => openCase(c.id)}><strong>{c.title}</strong><span>{c.location || 'No location'} • {c.date || 'No date'}</span><span>{c.room_count} rooms • {c.event_count} events • your role: {c.member_role}</span></button>{user.role === 'admin' && <Button onClick={() => deleteCase(c.id)} variant="danger">Delete</Button>}</div>)}</div>}</Card><Card><h2>Fast start</h2><ol className="steps"><li>Create team accounts</li><li>Create investigation</li><li>Add rooms and base camp</li><li>Assign investigators</li><li>Everyone logs in from phones</li></ol></Card></div>{accountsOpen && <AccountManager users={users} refreshUsers={refreshUsers} onClose={() => setAccountsOpen(false)} />}</main>;
+  return <main className="shell"><header className="topbar"><div><p className="eyebrow">Logged in as {user.display_name}</p><h1>Investigation Dashboard</h1><div className="chips"><Pill tone={user.role === 'admin' ? 'blue' : 'default'}>{user.role}</Pill><Pill>{cases.length} assigned</Pill></div></div><div className="actions">{user.role === 'admin' && <Button onClick={() => setAccountsOpen(true)}>User accounts</Button>}{user.role === 'admin' && <Button onClick={newCase} variant="primary">New investigation</Button>}<Button onClick={logout} variant="danger">Log out</Button></div></header>{error && <div className="error">{error}</div>}<div className="main-grid"><Card><div className="section-head"><div><h2>Assigned investigations</h2><p>Users only see cases they are assigned to.</p></div></div>{cases.length === 0 ? <div className="empty">No investigations yet.</div> : <div className="case-list">{cases.map((c) => <div key={c.id} className="case-row"><button onClick={() => openCase(c.id)}><strong>{c.title}</strong><span>{c.location || 'No location'} • {c.date || 'No date'}</span><span>{c.room_count} rooms • {c.event_count} events • your role: {c.member_role}</span></button>{user.role === 'admin' && <Button onClick={() => deleteCase(c.id)} variant="danger">Delete</Button>}</div>)}</div>}</Card><Card><h2>Fast start</h2><ol className="steps"><li>Create user accounts for investigators</li><li>Create investigation</li><li>Add rooms and base camp</li><li>Assign investigators</li><li>Everyone logs in from phones</li></ol></Card></div>{accountsOpen && <AccountManager users={users} refreshUsers={refreshUsers} onClose={() => setAccountsOpen(false)} />}</main>;
 }
 
 function NewCase({ user, users, onBack, onCreated }) {
@@ -168,7 +298,7 @@ function NewCase({ user, users, onBack, onCreated }) {
       onCreated(data.id);
     } catch (err) { setError(err.message); }
   }
-  return <main className="shell"><header className="topbar"><div><button className="link" onClick={onBack}>← Back</button><h1>New investigation</h1><p>Add the real case details. Nothing is prefilled except today’s date and your name.</p></div></header><form onSubmit={create} className="main-grid"><Card><div className="form-grid"><Field label="Case name" value={title} setValue={setTitle} /><Field label="Location" value={location} setValue={setLocation} /><Field label="Date" value={date} setValue={setDate} /><Field label="Lead investigator" value={lead} setValue={setLead} /></div><hr /><h2>Rooms</h2><p>No default rooms. Add each real room and mark base camp.</p><div className="room-add"><input value={roomName} onChange={(e) => setRoomName(e.target.value)} onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); addRoom(); } }} placeholder="Example: Kitchen, Cellar, Bedroom 1" /><Button onClick={addRoom}>Add room</Button></div>{rooms.length === 0 ? <div className="empty">No rooms added yet.</div> : <div className="room-grid">{rooms.map((r, i) => <div key={`${r.name}-${i}`} className={`room-card ${baseCampIndex === i ? 'active' : ''}`}><button type="button" onClick={() => setBaseCampIndex(i)}><strong>{r.name}</strong><span>{baseCampIndex === i ? 'Base camp' : 'Click to mark base camp'}</span></button><Button onClick={() => removeRoom(i)} variant="danger">Delete</Button></div>)}</div>}{error && <div className="error">{error}</div>}</Card><Card><h2>Team access</h2><p>Select who can see this case when they log in.</p><div className="list">{users.filter((u) => u.id !== user.id).map((u) => <button key={u.id} type="button" onClick={() => toggleMember(u.id)} className={`member ${memberIds.includes(u.id) ? 'selected' : ''}`}><span><strong>{u.display_name}</strong><small>@{u.username}</small></span><Pill>{u.role}</Pill></button>)}</div><Button type="submit" variant="primary">Create case</Button></Card></form></main>;
+  return <main className="shell"><header className="topbar"><div><button className="link" onClick={onBack}>← Back</button><h1>New investigation</h1><p>Add the real case details. Nothing is prefilled except today’s date and your name.</p></div></header><form onSubmit={create} className="main-grid"><Card><div className="form-grid"><Field label="Case name" value={title} setValue={setTitle} /><Field label="Location" value={location} setValue={setLocation} /><Field label="Date" value={date} setValue={setDate} /><Field label="Lead investigator" value={lead} setValue={setLead} /></div><hr /><h2>Rooms</h2><p>No default rooms. Add each real room and mark base camp.</p><div className="room-add"><input value={roomName} onChange={(e) => setRoomName(e.target.value)} onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); addRoom(); } }} placeholder="Example: Kitchen, Cellar, Bedroom 1" /><Button onClick={addRoom}>Add room</Button></div>{rooms.length === 0 ? <div className="empty">No rooms added yet.</div> : <div className="room-grid">{rooms.map((r, i) => <div key={`${r.name}-${i}`} className={`room-card ${baseCampIndex === i ? 'active' : ''}`}><button type="button" onClick={() => setBaseCampIndex(i)}><strong>{r.name}</strong><span>{baseCampIndex === i ? 'Base camp' : 'Click to mark base camp'}</span></button><Button onClick={() => removeRoom(i)} variant="danger">Delete</Button></div>)}</div>}{error && <div className="error">{error}</div>}</Card><Card><h2>Investigator access</h2><p>Select which user accounts can see this case when they log in.</p><div className="list">{users.filter((u) => u.id !== user.id).map((u) => <button key={u.id} type="button" onClick={() => toggleMember(u.id)} className={`member ${memberIds.includes(u.id) ? 'selected' : ''}`}><span><strong>{u.display_name}</strong><small>@{u.username}</small></span><Pill>{u.role}</Pill></button>)}</div><Button type="submit" variant="primary">Create case</Button></Card></form></main>;
 }
 
 function MediaPreview({ event }) {
@@ -206,10 +336,13 @@ function LogModal({ caseId, room, user, eventType, onClose, onSaved }) {
   const [note, setNote] = useState('');
   const [classification, setClassification] = useState('Unreviewed');
   const [file, setFile] = useState(null);
+  const [uploadConfirmed, setUploadConfirmed] = useState(false);
   const [recording, setRecording] = useState(false);
   const [error, setError] = useState('');
   const recorderRef = useRef(null);
   const chunksRef = useRef([]);
+  const isUploadEvent = eventType === 'Voice' || eventType === 'Photo';
+  const blockedByUploadConfirmation = Boolean(file && !uploadConfirmed);
 
   async function startRecording() {
     setError('');
@@ -222,6 +355,7 @@ function LogModal({ caseId, room, user, eventType, onClose, onSaved }) {
         const blob = new Blob(chunksRef.current, { type: 'audio/webm' });
         const recorded = new File([blob], `voice-note-${Date.now()}.webm`, { type: 'audio/webm' });
         setFile(recorded);
+        setUploadConfirmed(false);
         stream.getTracks().forEach((t) => t.stop());
       };
       recorderRef.current = recorder;
@@ -232,6 +366,7 @@ function LogModal({ caseId, room, user, eventType, onClose, onSaved }) {
   function stopRecording() { if (recorderRef.current && recording) { recorderRef.current.stop(); setRecording(false); } }
   async function chooseFile(nextFile) {
     setError('');
+    setUploadConfirmed(false);
     if (!nextFile) { setFile(null); return; }
     try {
       const prepared = eventType === 'Photo' ? await compressImageFile(nextFile) : nextFile;
@@ -244,6 +379,10 @@ function LogModal({ caseId, room, user, eventType, onClose, onSaved }) {
   async function save(e) {
     e.preventDefault();
     setError('');
+    if (blockedByUploadConfirmation) {
+      setError('Confirm the upload rule before saving this file.');
+      return;
+    }
     try {
       const form = new FormData();
       form.append('type', eventType);
@@ -257,7 +396,7 @@ function LogModal({ caseId, room, user, eventType, onClose, onSaved }) {
       onSaved();
     } catch (err) { setError(err.message); }
   }
-  return <div className="modal-backdrop"><Card className="modal"><div className="modal-head"><div><p className="eyebrow">Quick log</p><h2>{meta.icon} {meta.label} in {room.name}</h2><p>Logged by {user.display_name}. Timestamp saves automatically.</p></div><Button onClick={onClose}>✕</Button></div><form onSubmit={save} className="stack">{meta.readingKey && <div className="form-grid two"><Field label="Reading value" value={value} setValue={setValue} placeholder="Example: 3.2" /><Field label="Unit" value={unit} setValue={setUnit} /></div>}{eventType === 'Voice' && <div className="upload-box"><h3>Voice note</h3><p>Record directly on the phone or upload an audio file.</p><div className="actions">{!recording ? <Button onClick={startRecording}>Start recording</Button> : <Button onClick={stopRecording} variant="danger">Stop recording</Button>}<input type="file" accept="audio/*" onChange={(e) => chooseFile(e.target.files?.[0] || null)} /></div>{file && <p className="success">Selected: {file.name}</p>}</div>}{eventType === 'Photo' && <div className="upload-box"><h3>Photo note</h3><p>Take a photo or upload one from the gallery.</p><input type="file" accept="image/*" capture="environment" onChange={(e) => chooseFile(e.target.files?.[0] || null)} />{file && <p className="success">Selected: {file.name}</p>}</div>}<label className="field"><span>Note</span><textarea value={note} onChange={(e) => setNote(e.target.value)} placeholder="What happened? What was checked? Any obvious normal cause?" /></label><Select label="Initial classification" value={classification} setValue={setClassification}><option>Unreviewed</option><option>Known cause</option><option>Likely normal cause</option><option>Unclear</option><option>High-interest anomaly</option></Select>{error && <div className="error">{error}</div>}<div className="actions end"><Button onClick={onClose}>Cancel</Button><Button type="submit" variant="primary">Save to timeline</Button></div></form></Card></div>;
+  return <div className="modal-backdrop"><Card className="modal"><div className="modal-head"><div><p className="eyebrow">Quick log</p><h2>{meta.icon} {meta.label} in {room.name}</h2><p>Logged by {user.display_name}. Timestamp saves automatically.</p></div><Button onClick={onClose}>✕</Button></div><form onSubmit={save} className="stack">{meta.readingKey && <div className="form-grid two"><Field label="Reading value" value={value} setValue={setValue} placeholder="Example: 3.2" /><Field label="Unit" value={unit} setValue={setUnit} /></div>}{isUploadEvent && <div className="upload-warning"><strong>Upload rules</strong><p>Upload surroundings, rooms, objects, equipment, environmental details, or case-relevant evidence only.</p><p>Do not upload people’s faces, children, private documents, addresses, bank cards, medical information, private messages, or unnecessary personal information.</p><p>Only upload material you created yourself or have permission to use. If a person appears accidentally, crop, blur, or obscure them before uploading where practical.</p></div>}{eventType === 'Voice' && <div className="upload-box"><h3>Voice note</h3><p>Record directly on the phone or upload an audio file.</p><div className="actions">{!recording ? <Button onClick={startRecording}>Start recording</Button> : <Button onClick={stopRecording} variant="danger">Stop recording</Button>}<input type="file" accept="audio/*" onChange={(e) => chooseFile(e.target.files?.[0] || null)} /></div>{file && <p className="success">Selected: {file.name}</p>}</div>}{eventType === 'Photo' && <div className="upload-box"><h3>Photo note</h3><p>Take a photo or upload one from the gallery.</p><input type="file" accept="image/*" capture="environment" onChange={(e) => chooseFile(e.target.files?.[0] || null)} />{file && <p className="success">Selected: {file.name}</p>}</div>}{file && <label className="check-row upload-confirm"><input type="checkbox" checked={uploadConfirmed} onChange={(e) => setUploadConfirmed(e.target.checked)} /><span>Before uploading, I confirm this file focuses on the investigation environment or case-relevant evidence, and does not unnecessarily show identifiable people or private personal information.</span></label>}<label className="field"><span>Note</span><textarea value={note} onChange={(e) => setNote(e.target.value)} placeholder="What happened? What was checked? Any obvious normal cause?" /></label><Select label="Initial classification" value={classification} setValue={setClassification}><option>Unreviewed</option><option>Known cause</option><option>Likely normal cause</option><option>Unclear</option><option>High-interest anomaly</option></Select>{error && <div className="error">{error}</div>}<div className="actions end"><Button onClick={onClose}>Cancel</Button><Button type="submit" variant="primary" disabled={blockedByUploadConfirmation}>Save to timeline</Button></div></form></Card></div>;
 }
 
 function LiveCase({ user, caseId, onBack }) {
@@ -305,14 +444,15 @@ function App() {
 
   async function refreshUsers() { if (user?.role === 'admin') { const data = await api('/users'); setUsers(data.users); } }
   async function refreshCases() { const data = await api('/investigations'); setCases(data.investigations); }
-  async function afterLogin(nextUser) { setUser(nextUser); setTutorial(true); setScreen('dashboard'); }
+  async function afterLogin(nextUser) { setUser(nextUser); setTutorial(false); setScreen('dashboard'); }
 
   useEffect(() => { (async () => { try { const setup = await api('/setup'); setNeedsSetup(setup.needs_setup); if (!setup.needs_setup && token()) { try { const me = await api('/me'); setUser(me.user); } catch { setToken(''); } } } finally { setChecked(true); } })(); }, []);
-  useEffect(() => { if (user) { refreshCases(); refreshUsers().catch(() => {}); } }, [user]);
+  useEffect(() => { if (user && userHasAcceptedCurrentTerms(user)) { refreshCases(); refreshUsers().catch(() => {}); } }, [user]);
 
   if (!checked) return <main className="shell center"><div className="empty">Loading ParaHub…</div></main>;
   if (needsSetup) return <Setup onDone={() => setNeedsSetup(false)} />;
   if (!user) return <Login onLogin={afterLogin} />;
+  if (!userHasAcceptedCurrentTerms(user)) return <TermsAcceptance user={user} onAccepted={(nextUser) => { setUser(nextUser); setTutorial(true); setScreen('dashboard'); }} />;
   return <>{screen === 'dashboard' && <Dashboard user={user} setUser={setUser} users={users} refreshUsers={refreshUsers} cases={cases} refreshCases={refreshCases} openCase={(id) => { setActiveCaseId(id); setScreen('live'); }} newCase={() => setScreen('new')} />}{screen === 'new' && <NewCase user={user} users={users} onBack={() => setScreen('dashboard')} onCreated={(id) => { setActiveCaseId(id); refreshCases(); setScreen('live'); }} />}{screen === 'live' && <LiveCase user={user} caseId={activeCaseId} onBack={() => { refreshCases(); setScreen('dashboard'); }} />}<button className="tutorial-button" onClick={() => setTutorial(true)}>❔ Tutorial</button>{tutorial && <Tutorial onClose={() => setTutorial(false)} />}</>;
 }
 

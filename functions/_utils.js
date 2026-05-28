@@ -1,5 +1,8 @@
 const encoder = new TextEncoder();
 
+export const CURRENT_TERMS_VERSION = '1.0';
+export const CURRENT_PRIVACY_VERSION = '1.0';
+
 export function json(data, status = 200) {
   return new Response(JSON.stringify(data), {
     status,
@@ -38,7 +41,21 @@ export function randomSalt() {
 
 export function cleanUser(row) {
   if (!row) return null;
-  return { id: row.id, username: row.username, display_name: row.display_name, role: row.role, created_at: row.created_at };
+  return {
+    id: row.id,
+    username: row.username,
+    display_name: row.display_name,
+    role: row.role,
+    created_at: row.created_at,
+    acceptedTerms: Boolean(row.terms_accepted),
+    acceptedTermsVersion: row.accepted_terms_version || null,
+    acceptedPrivacyVersion: row.accepted_privacy_version || null,
+    acceptedAt: row.terms_accepted_at || null,
+    acceptedByUserId: row.terms_accepted_by_user_id || null,
+    acceptedByName: row.terms_accepted_by_name || null,
+    creditPreference: row.credit_preference || 'Anonymous investigator',
+    customCreditName: row.custom_credit_name || '',
+  };
 }
 
 export async function getUserFromRequest(request, env) {
@@ -48,7 +65,7 @@ export async function getUserFromRequest(request, env) {
   if (!token) return null;
   const now = Date.now();
   const row = await env.DB.prepare(
-    `SELECT u.id, u.username, u.display_name, u.role, u.created_at
+    `SELECT u.*
      FROM sessions s
      JOIN users u ON u.id = s.user_id
      WHERE s.token = ? AND s.expires_at > ?`
@@ -60,6 +77,27 @@ export async function requireUser(request, env) {
   const user = await getUserFromRequest(request, env);
   if (!user) return { error: json({ error: 'Not logged in' }, 401) };
   return { user };
+}
+
+
+export function hasAcceptedCurrentTerms(user) {
+  return Boolean(
+    user?.acceptedTerms &&
+    user?.acceptedTermsVersion === CURRENT_TERMS_VERSION &&
+    user?.acceptedPrivacyVersion === CURRENT_PRIVACY_VERSION
+  );
+}
+
+export function requireAcceptedTerms(user) {
+  if (!hasAcceptedCurrentTerms(user)) {
+    return json({
+      error: 'You must accept the current ParaHub Terms of Use and Privacy Notice before using this feature.',
+      code: 'TERMS_REQUIRED',
+      currentTermsVersion: CURRENT_TERMS_VERSION,
+      currentPrivacyVersion: CURRENT_PRIVACY_VERSION,
+    }, 403);
+  }
+  return null;
 }
 
 export function requireAdmin(user) {

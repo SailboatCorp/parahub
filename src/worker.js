@@ -4,6 +4,7 @@ import { onRequestPost as logoutPost } from '../functions/api/logout.js';
 import { onRequestGet as meGet } from '../functions/api/me.js';
 import { onRequestGet as usersGet, onRequestPost as usersPost } from '../functions/api/users.js';
 import { onRequestGet as mediaGet } from '../functions/api/media.js';
+import { onRequestPost as termsPost } from '../functions/api/terms.js';
 import { onRequestGet as investigationsGet, onRequestPost as investigationsPost } from '../functions/api/investigations/index.js';
 import { onRequestGet as investigationGet, onRequestDelete as investigationDelete } from '../functions/api/investigations/[id].js';
 import { onRequestPost as roomsPost } from '../functions/api/investigations/[id]/rooms.js';
@@ -47,6 +48,7 @@ async function handleApi(request, env) {
     if (path === '/api/logout' && method === 'POST') return run(logoutPost, request, env);
     if (path === '/api/me' && method === 'GET') return run(meGet, request, env);
     if (path === '/api/media' && method === 'GET') return run(mediaGet, request, env);
+    if (path === '/api/terms' && method === 'POST') return run(termsPost, request, env);
 
     if (path === '/api/users') {
       if (method === 'GET') return run(usersGet, request, env);

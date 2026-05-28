@@ -7,7 +7,15 @@ CREATE TABLE IF NOT EXISTS users (
   password_hash TEXT NOT NULL,
   salt TEXT NOT NULL,
   role TEXT NOT NULL CHECK (role IN ('admin', 'investigator', 'viewer')),
-  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  terms_accepted INTEGER NOT NULL DEFAULT 0,
+  accepted_terms_version TEXT,
+  accepted_privacy_version TEXT,
+  terms_accepted_at TEXT,
+  terms_accepted_by_user_id TEXT,
+  terms_accepted_by_name TEXT,
+  credit_preference TEXT NOT NULL DEFAULT 'Anonymous investigator' CHECK (credit_preference IN ('Anonymous investigator', 'First name only', 'Full name', 'Custom credit name', 'Do not publicly credit me')),
+  custom_credit_name TEXT
 );
 
 CREATE TABLE IF NOT EXISTS sessions (

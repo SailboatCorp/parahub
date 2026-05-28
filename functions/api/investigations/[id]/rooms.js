@@ -1,8 +1,10 @@
-import { json, id, readJson, requireUser, requireCaseAdmin } from '../../../_utils.js';
+import { json, id, readJson, requireUser, requireCaseAdmin, requireAcceptedTerms } from '../../../_utils.js';
 
 export async function onRequestPost({ request, env, params }) {
   const { user, error } = await requireUser(request, env);
   if (error) return error;
+  const termsError = requireAcceptedTerms(user);
+  if (termsError) return termsError;
   const admin = await requireCaseAdmin(env, params.id, user);
   if (admin.error) return admin.error;
 

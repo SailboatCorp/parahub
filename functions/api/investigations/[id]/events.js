@@ -1,4 +1,4 @@
-import { json, id, safeName, readJson, requireUser, requireInvestigationAccess } from '../../../_utils.js';
+import { json, id, safeName, readJson, requireUser, requireInvestigationAccess, requireAcceptedTerms } from '../../../_utils.js';
 
 const MAX_FILE_SIZE = 3 * 1024 * 1024;
 
@@ -20,6 +20,8 @@ function normalizeClassification(value) {
 export async function onRequestPost({ request, env, params }) {
   const { user, error } = await requireUser(request, env);
   if (error) return error;
+  const termsError = requireAcceptedTerms(user);
+  if (termsError) return termsError;
   const access = await requireInvestigationAccess(env, params.id, user);
   if (access.error) return access.error;
   if (access.member.role === 'viewer') return json({ error: 'Viewers cannot add events' }, 403);

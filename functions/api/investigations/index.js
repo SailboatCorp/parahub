@@ -1,4 +1,4 @@
-import { json, id, readJson, requireUser, requireAdmin, defaultControls } from '../../_utils.js';
+import { json, id, readJson, requireUser, requireAdmin, requireAcceptedTerms, defaultControls } from '../../_utils.js';
 
 async function getCaseList(env, user) {
   if (user.role === 'admin') {
@@ -29,12 +29,16 @@ async function getCaseList(env, user) {
 export async function onRequestGet({ request, env }) {
   const { user, error } = await requireUser(request, env);
   if (error) return error;
+  const termsError = requireAcceptedTerms(user);
+  if (termsError) return termsError;
   return json({ investigations: await getCaseList(env, user) });
 }
 
 export async function onRequestPost({ request, env }) {
   const { user, error } = await requireUser(request, env);
   if (error) return error;
+  const termsError = requireAcceptedTerms(user);
+  if (termsError) return termsError;
   const adminError = requireAdmin(user);
   if (adminError) return adminError;
 

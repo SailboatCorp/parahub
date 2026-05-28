@@ -10,4 +10,4 @@ not_found_handling = "single-page-application"
 [[d1_databases]]
 binding = "DB"
 database_name = "parahub-db"
-database_id = "34f087d5-48d2-4c98-ba73-d861461ed0c1"
+database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"

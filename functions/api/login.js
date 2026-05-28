@@ -1,4 +1,4 @@
-import { json, hashPassword, readJson, requireBindings } from '../_utils.js';
+import { json, hashPassword, readJson, requireBindings, cleanUser } from '../_utils.js';
 
 export async function onRequestPost({ request, env }) {
   requireBindings(env);
@@ -17,6 +17,6 @@ export async function onRequestPost({ request, env }) {
 
   return json({
     token,
-    user: { id: user.id, username: user.username, display_name: user.display_name, role: user.role },
+    user: cleanUser(user),
   });
 }
